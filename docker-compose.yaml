@@ -1,0 +1,47 @@
+services:
+  citus-coordinator:
+    image: citusdata/citus:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - citus-coordinator-data:/var/lib/postgresql/data
+      - ./data:/data
+      # - ./data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      # - ./data/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+    networks:
+      - citus-net
+
+  citus-worker-1:
+    image: citusdata/citus:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - citus-worker-1-data:/var/lib/postgresql/data
+      - ./data:/data
+      # - ./data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      # - ./data/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+    networks:
+      - citus-net
+
+  citus-worker-2:
+    image: citusdata/citus:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - citus-worker-2-data:/var/lib/postgresql/data
+      - ./data:/data
+      # - ./data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      # - ./data/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+    networks:
+      - citus-net
+
+volumes:
+  citus-coordinator-data:
+  citus-worker-1-data:
+  citus-worker-2-data:
+
+networks:
+  citus-net:
+    driver: bridge
