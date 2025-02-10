@@ -20,7 +20,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - citus-coordinator-data:/var/lib/postgresql/data
+      - ./pgdata/citus-coordinator-data:/var/lib/postgresql/data
       - ./data:/data
     networks:
       - citus-net
@@ -29,8 +29,10 @@ services:
     image: citusdata/citus:latest
     environment:
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - "54321:5432"
     volumes:
-      - citus-worker-1-data:/var/lib/postgresql/data
+      - ./pgdata/citus-worker-1-data:/var/lib/postgresql/data
       - ./data:/data
     networks:
       - citus-net
@@ -39,8 +41,10 @@ services:
     image: citusdata/citus:latest
     environment:
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - "54322:5432"
     volumes:
-      - citus-worker-2-data:/var/lib/postgresql/data
+      - ./pgdata/citus-worker-2-data:/var/lib/postgresql/data
       - ./data:/data
     networks:
       - citus-net
@@ -48,6 +52,7 @@ services:
 networks:
   citus-net:
     driver: bridge
+
 
 ```
 
